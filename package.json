@@ -1,0 +1,60 @@
+{
+  "name": "expintek-workspace",
+  "version": "1.0.0",
+  "description": "Expintek workspace for staffs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@electron/notarize": "^2.3.2",
+    "electron-log": "^5.1.5",
+    "electron-updater": "^6.2.1",
+    "simplebar": "^6.2.7"
+  },
+  "author": "Coolest Bomb",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
+    "electron-builder-squirrel-windows": "^24.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Expintekuser/workspace.git"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "Expintekuser",
+      "repo": "expintek-app",
+      "token": "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"
+    }
+  ],
+  "build": {
+    "appId": "winexpintek",
+    "productName": "expintek-workspace",
+    "directories": {
+      "output": "build"
+    },
+    "mac": {
+      "icon": "build/logo.icns",
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "hardenedRuntime": true,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "gatekeeperAssess": false
+    },
+    "win": {
+      "icon": "build/logo.ico",
+      "target": "portable"
+    },
+    "linux": {
+      "icon": "build/logo.png"
+    }
+  }
+}
