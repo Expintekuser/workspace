@@ -1,0 +1,40 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.expintek.workspace
+productName: Expintek Workspace
+files:
+  - filter:
+      - dist/**/*
+      - main.js
+      - menu.js
+      - package.json
+mac:
+  icon: build/logo.icns
+  category: public.app-category.productivity
+  target:
+    - dmg
+    - zip
+  hardenedRuntime: true
+  entitlements: entitlements.mac.plist
+  entitlementsInherit: entitlements.mac.plist
+  gatekeeperAssess: false
+win:
+  icon: build/logo.ico
+  target:
+    - nsis
+  publisherName: Coolest movement Network
+nsis:
+  oneClick: false
+  perMachine: true
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Expintek Workspace
+linux:
+  icon: build/logo.png
+  target:
+    - AppImage
+    - deb
+electronVersion: 31.1.0
