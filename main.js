@@ -46,7 +46,7 @@ app.whenReady().then(() => {
     repo: 'workspace',
     owner: 'Expintekuser',
     private: true,
-    token: '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'
+    token: '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'
   });
 
   autoUpdater.checkForUpdatesAndNotify();
