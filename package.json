@@ -29,7 +29,7 @@
     {
       "provider": "github",
       "owner": "Expintekuser",
-      "repo": "expintek-app",
+      "repo": "workspace",
       "token": "${GITHUB_TOKEN}"
     }
   ],
@@ -42,6 +42,7 @@
     "files": [
       "dist/**/*",
       "main.js",
+      "menu.js",
       "package.json"
     ],
     "mac": {
