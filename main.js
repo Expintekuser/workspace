@@ -1,13 +1,22 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
+require('./menu');
 
 let mainWindow;
 
-autoUpdater.autoDownload = false;
-autoUpdater.autoInstallOnAppQuit = true;
+autoUpdater.autoDownload = false; // Auto download is set to false
+autoUpdater.autoInstallOnAppQuit = true; // Install updates on app quit
 
 function createWindow(url) {
+  if (mainWindow) {
+    mainWindow.loadURL(url).catch((err) => {
+      console.error('Failed to load URL:', err);
+      dialog.showErrorBox('Error', 'Failed to load URL: ' + err.message);
+    });
+    return;
+  }
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -29,56 +38,55 @@ function createWindow(url) {
   });
 }
 
-app.whenReady().then(() => {
-  // Load admin.php initially
-  createWindow('https://expintek.com/portal/cgi-bin/app/index.php');
-
-  // Load other pages as needed
-  ipcMain.on('load-page', (event, page) => {
-    const url = `https://expintek.com/portal/cgi-bin/app/${page}.php`;
-    createWindow(url);
-  });
-
-  require('./menu');
-
-  autoUpdater.setFeedURL({
-    provider: 'github',
-    repo: 'workspace',
-    owner: 'Expintekuser',
-    private: true,
-    token: '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'
-  });
-
+// Function to initialize auto-updater
+function initializeAutoUpdater() {
   autoUpdater.checkForUpdatesAndNotify();
 
   autoUpdater.on('update-available', (info) => {
-    dialog.showMessageBox({
+    const result = dialog.showMessageBoxSync({
       type: 'info',
+      buttons: ['Download', 'Later'],
       title: 'Update available',
-      message: `Update available. Current version: ${app.getVersion()}. Downloading now...`,
+      message: `A new version is available. Do you want to download it now?`
     });
-
-    autoUpdater.downloadUpdate();
+    if (result === 0) {
+      autoUpdater.downloadUpdate();
+    }
   });
 
-  autoUpdater.on('update-not-available', (info) => {
-    dialog.showMessageBox({
-      type: 'info',
-      title: 'No update available',
-      message: `No update available. Current version: ${app.getVersion()}.`,
-    });
+  autoUpdater.on('update-not-available', () => {
+    console.log('No update available.');
   });
 
   autoUpdater.on('update-downloaded', () => {
-    console.log('Update downloaded; will install in 5 seconds');
-    setTimeout(() => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update Ready',
+      message: 'An update has been downloaded. The application will restart to apply the update.',
+    }).then(() => {
       autoUpdater.quitAndInstall();
-    }, 5000);
+    });
   });
 
   autoUpdater.on('error', (err) => {
     console.error('Update error:', err);
-    dialog.showErrorBox('Error: ', err == null ? 'unknown' : (err.stack || err).toString());
+    dialog.showErrorBox('Error', err?.stack || err.message || 'Unknown error');
+  });
+}
+
+app.whenReady().then(() => {
+  createWindow('https://expintek.com/portal/cgi-bin/app/index.php');
+  initializeAutoUpdater();
+
+  // Handle loading other pages
+  ipcMain.on('load-page', (event, page) => {
+    const url = `https://expintek.com/portal/cgi-bin/app/${page}.php`;
+    if (mainWindow) {
+      mainWindow.loadURL(url).catch((err) => {
+        console.error('Failed to load URL:', err);
+        dialog.showErrorBox('Error', 'Failed to load URL: ' + err.message);
+      });
+    }
   });
 });
 
