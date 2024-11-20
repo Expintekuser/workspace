@@ -32,18 +32,18 @@
       "provider": "github",
       "owner": "Expintekuser",
       "repo": "workspace",
-      "token": "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",
+      "token": "GITHUB_TOKEN_ENV_VAR",
       "releaseType": "release"
     }
   ],
   "build": {
-    "generateUpdatesFilesForAllChannels": true,
     "appId": "com.expintek.workspace",
     "productName": "Expintek Workspace",
     "compression": "maximum",
     "directories": {
       "output": "dist"
     },
+    "generateUpdatesFilesForAllChannels": true,
     "files": [
       "main.js",
       "menu.js",
