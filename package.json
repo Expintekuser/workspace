@@ -10,11 +10,13 @@
     "build:all": "electron-builder --mac --win --linux"
   },
   "author": "Coolest Bomb",
+  "email": "app@expintek.com",
   "license": "ISC",
   "dependencies": {
     "@electron/notarize": "^2.3.2",
     "electron-log": "^5.1.5",
-    "electron-updater": "^6.2.1",
+    "electron-updater": "^6.3.9",
+    "glob": "^11.0.0",
     "simplebar": "^6.2.7"
   },
   "devDependencies": {
@@ -30,21 +32,25 @@
       "provider": "github",
       "owner": "Expintekuser",
       "repo": "workspace",
-      "token": "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"
+      "token": "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",
+      "releaseType": "release"
     }
   ],
   "build": {
     "appId": "com.expintek.workspace",
     "productName": "Expintek Workspace",
+    "compression": "maximum",
     "directories": {
       "output": "dist"
     },
     "files": [
       "main.js",
       "menu.js",
+      "preload.js",
       "package.json",
       "build/**/*"
     ],
+    "asar": true,
     "mac": {
       "icon": "build/logo.icns",
       "category": "public.app-category.productivity",
@@ -57,22 +63,22 @@
       "entitlementsInherit": "entitlements.mac.plist",
       "gatekeeperAssess": false
     },
-   "win": {
-  "icon": "build/logo.ico",
-  "target": [
-    "nsis"
-  ],
-  "publisherName": "Coolest movement Network"
-},
-"nsis": {
-  "oneClick": false,
-  "perMachine": true,
-  "allowElevation": true,
-  "allowToChangeInstallationDirectory": true,
-  "createDesktopShortcut": true,
-  "createStartMenuShortcut": true,
-  "shortcutName": "Expintek Workspace"
-},
+    "win": {
+      "icon": "build/logo.ico",
+      "target": [
+        "nsis"
+      ],
+      "publisherName": "Coolest movement Network"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Expintek Workspace"
+    },
     "linux": {
       "icon": "build/logo.png",
       "target": [
@@ -82,4 +88,3 @@
     }
   }
 }
-
