@@ -37,6 +37,7 @@
     }
   ],
   "build": {
+    "generateUpdatesFilesForAllChannels": true,
     "appId": "com.expintek.workspace",
     "productName": "Expintek Workspace",
     "compression": "maximum",
