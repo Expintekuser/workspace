@@ -40,10 +40,10 @@
       "output": "dist"
     },
     "files": [
-      "dist/**/*",
       "main.js",
       "menu.js",
-      "package.json"
+      "package.json",
+      "build/**/*"
     ],
     "mac": {
       "icon": "build/logo.icns",
