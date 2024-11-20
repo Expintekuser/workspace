@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
+const feedURL = 'https://github.com/Expintekuser/workspace/releases/latest/download/latest.yml';  // Corrected URL
 require('./menu');
 
 let mainWindow;
@@ -40,6 +41,7 @@ function createWindow(url) {
 
 // Function to initialize auto-updater
 function initializeAutoUpdater() {
+  autoUpdater.setFeedURL(feedURL);  // Set the feed URL
   autoUpdater.checkForUpdatesAndNotify();
 
   autoUpdater.on('update-available', (info) => {
@@ -77,6 +79,11 @@ function initializeAutoUpdater() {
 app.whenReady().then(() => {
   createWindow('https://expintek.com/portal/cgi-bin/app/index.php');
   initializeAutoUpdater();
+
+  // Periodically check for updates (e.g., every hour)
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify();
+  }, 1000 * 60 * 60); // Check for updates every hour
 
   // Handle loading other pages
   ipcMain.on('load-page', (event, page) => {

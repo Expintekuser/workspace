@@ -28,14 +28,14 @@
     "url": "https://github.com/Expintekuser/workspace.git"
   },
   "publish": [
-    {
-      "provider": "github",
-      "owner": "Expintekuser",
-      "repo": "workspace",
-      "token": "GITHUB_TOKEN_ENV_VAR",
-      "releaseType": "release"
-    }
-  ],
+  {
+    "provider": "github",
+    "owner": "Expintekuser",
+    "repo": "workspace",
+    "token": "${process.env.GITHUB_TOKEN}",
+    "releaseType": "release"
+  }
+],
   "build": {
     "appId": "com.expintek.workspace",
     "productName": "Expintek Workspace",
